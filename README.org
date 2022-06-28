@@ -1,0 +1,6 @@
+#+html: <p align="center"><img src=".github/logo.png" width="200" /></p>
+#+html: <p align="center"><strong>AlgebraicRL.jl</strong> Compositional reinforcement learning.</p>
+
+=AlgebraicRL.jl= is a Julia library for composing Markov decision processes (MDPs) and their agents compositionally.
+The library implements algebras for compositional reinforcement learning assisted by [[https://github.com/AlgebraicJulia/Catlab.jl][Catlab.jl]]
+to build a computational interpretation of the categorical semantics that make composition formally precise.
