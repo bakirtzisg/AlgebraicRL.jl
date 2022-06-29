@@ -23,6 +23,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 [compat]
 Catlab = "0.13"
 DifferentialEquations = "^6.16.0, 7"
+IntervalSets = "0.7"
 GR = "0.64"
 Flux = "0.13"
 Plots = "1"
