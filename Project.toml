@@ -7,13 +7,11 @@ version = "0.1.1"
 AlgebraicDynamics = "5fd6ff03-a254-427e-8840-ba658f502e32"
 ReinforcementLearning = "158674fc-8238-5cab-b5ba-03dfc80d1318"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-StableRNGs = "860ef19b-820b-49d6-a774-d7a799459cd3"
  
 [compat]
 AlgebraicDynamics = "0.1"
 ReinforcementLearning = "0.10"
 julia = "1.0"
-StableRNGs = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
