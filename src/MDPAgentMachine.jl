@@ -9,7 +9,7 @@ the same arguments that returns a vector.
 Output vector length must be the same length as specified by output_size in the function call to MDPAgentMachine
 
 Arguments: 
-- env - A MDP following the AbstractEnv interface
+- `env` - A MDP following the AbstractEnv interface
 
 Returns:
 - 1.0 if the environment is terminated, 0.0 otherwise.
@@ -26,7 +26,7 @@ To customize, create your own function with the same arguments.
 The internal state must be the same size as the size given by input_size in the function call to MDPAgentMachine
 
 Arguments:
-- env - A MDP following the AbstractEnv interface
+- `env` - A MDP following the AbstractEnv interface
 - `internal_state` - A vector which contains the information needed to set the internal state. In the `default_input_function`, does nothing.
 
 Returns:
@@ -89,14 +89,14 @@ You can also choose to display the environment each timestep by setting display 
 must overwrite Base.display for your environment in order to use that functionality.
 
 Arguments:
-- env - a MDP following the AbstractEnv interface
-- agent - a agent/policy following the AbstractPolicy interface
+- `env` - a MDP following the AbstractEnv interface
+- `agent` - a agent/policy following the AbstractPolicy interface
 - `input_size` - an int which must be equal to the size of the vector used by the input function
 - `input_function` - a function which is called on the MDP before running an episode. Must have the same arguments as `default_input_function`
 - `output_size` - an int which must be equal to the size of the vector returned by the output function
 - `output_function` - a function which is called after the episode is terminated. Must have the same arguments as `default_input_function`. Returns a vector.
-- display - whether or not to display the MDP every timestep. Calls Base.display(env) if true.
-- resetMDP - whether or not to reset the MDP via reset!(env) before running an episode.
+- `display` - whether or not to display the MDP every timestep. Calls Base.display(env) if true.
+- `resetMDP` - whether or not to reset the MDP via reset!(env) before running an episode.
 """
 function MDPAgentMachine( env::AbstractEnv, agent::AbstractPolicy,
                          ;input_size = 1, input_function = default_input_function,
@@ -149,8 +149,8 @@ Runs an episode of the MDP following the policy given in the constructor for the
 eval_dynamics with zeros for the internal state variable. 
 
 Arguments: 
-- f - a machine created by MDPAgentMachine
-- xs - external variables used for setting the initial state
+- `f` - a machine created by MDPAgentMachine
+- `xs` - external variables used for setting the initial state
 
 Returns:
 - a vector of zeros. IE basically nothing but AlgebraicDynamics requires a vector.
@@ -166,7 +166,7 @@ to assume zeros for those variables. This is convenient for our purposes. Howeve
 if we tried to overwite readout(::AbstractMachine). Instead, we will simply rename the function to `read_output` for our purposes.
 
 Arguments:
-- f - a machine created by MDPAgentMachine
+- `f` - a machine created by MDPAgentMachine
 
 Returns:
 - The result of the output_function specified in the function call to MDPAgentMachine

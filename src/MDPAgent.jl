@@ -43,8 +43,8 @@ is_terminated(vec::Vector{MDPAgent}) = is_terminated(vec[1])
 Runs 1 episode of the environment under the policy provided by the agent.
 
 Arguments:
-- mdpAgent - The MDPAgent you constructed, which contains an MDP following the AbstractEnv interface and an agent following the AbstractPolicy interface.
-- display - Whether or not to display the environment each step. Displaying is done via calling Base.display, so overwrite Base.display(yourEnv) in order to view your environment being solved.
+- `mdpAgent` - The MDPAgent you constructed, which contains an MDP following the AbstractEnv interface and an agent following the AbstractPolicy interface.
+- `display` - Whether or not to display the environment each step. Displaying is done via calling Base.display, so overwrite Base.display(yourEnv) in order to view your environment being solved.
 Returns:
 - The accumulated reward over the episode as returned by the environment
 """
