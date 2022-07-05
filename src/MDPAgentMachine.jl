@@ -66,8 +66,8 @@ Developor WARNING:
 
 
 """
-    MDPAgentMachine(    env::AbstractEnv, agent::AbstractPolicy,
-                        ;input_size = 1, input_function = default_input_function,
+    MDPAgentMachine(    env::AbstractEnv, agent::AbstractPolicy;
+                        input_size = 1, input_function = default_input_function,
                         output_size = 1, output_function = default_output_function,
                         display = false, resetMDP = true
                         )
