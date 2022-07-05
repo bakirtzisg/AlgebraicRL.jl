@@ -1,7 +1,7 @@
 push!(LOAD_PATH,"../src/")
 using Documenter, ReinforcementLearning, AlgebraicDynamics, AlgebraicDynamics.DWDDynam, AlgebraicRL
 
-makedocs(   sitename="AlgebraicRL.JL",
+makedocs(   sitename="AlgebraicRL.jl",
             pages     = Any[
                 "AlgebraicRL.jl" => "index.md",
                 "API" => "api.md"
