@@ -1,7 +1,7 @@
 name = "AlgebraicRL"
 uuid = "c16e2c52-81b3-496d-9adf-f7ef61ccdb53"
 authors = ["Georgios Bakirtzis", "Tyler Ingebrand"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 AlgebraicDynamics = "5fd6ff03-a254-427e-8840-ba658f502e32"
