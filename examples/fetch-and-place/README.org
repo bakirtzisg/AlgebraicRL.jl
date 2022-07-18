@@ -1,41 +1,30 @@
-* Fetch and Place MDP
+** Fetch-and-place MDP
 
-** Introduction
+This MDP is a possible implementation of a robot. Its goal is to pick up an object and set it down at a prespecified destination.
+The MDP consists of a robotic arm, an object, and a destination each modeled of as a single (x, y, z) point.
+We will see in a subsequent example how to incorporate physics engines, thereby allowing us to model more complex phenomena.
+This level of abstraction for the MDP problem formulation is sufficient for both uses, the simple we will see here and the complex with physics associated with each subsystem.
 
-This MDP is a trivial implementation of a robot. Its goal is to pick up an object and set it down at its destination.
-For simplicity, we have abstracted away almost everything. The MDP consists of the robotic arm, object, and destination each consists
-of a single XYZ point. 
+The MDP has to sequentially complete the following three tasks.
 
-The MDP has 3 stages: Box, Fetched, and Placed
-
-In the first stage (Box), the arm and object are restricted to be within a box. The box consists of a cube with side length 10
-situated at the origin (IE 0,0,0 and 10,10,10 are opposite corners). When the arm and object come within a certain distance of each
+1. In the first task, /box/, the arm and object are restricted to be within a box. The box consists of a cube with side length 10
+situated at the origin; that is, (0, 0, 0) and (10,10,10) are opposite corners. When the arm and object come within a certain distance of each
 other, the arm "picks up" the object. This transitions us to the second stage.
 
-In the second stage (Fetched), the arm is "holding" the object. The object can longer move. Now, the arm is restricted to a larger box between
-0,0,0 and 30,30,30. This stage ends when the arm (holding the object) comes within a certain distance of the destination. At this 
-point, the arm "sets down" the object.
+2. In the second task, /fetch/, the arm is holding the object. The object can longer move. Now, the arm is restricted to a larger box between
+the points (0, 0, 0) and (30, 30, 30). This task ends when the arm (holding the object) comes within a certain distance of the destination. At this 
+point, the arm sets down the object.
 
-Finally, the last stage (Placed). Here, both the arm and are free to move again. This stage ends when the arm and the object are 
+3. In the third task, /place/, both the arm and are free to move again. This stage ends when the arm and the object are 
 sufficiently far apart to show that the arm is no longer holding the object. 
 
-For the sake of compositionality, each stage is its own MDP. Each of these sub-MDPs contains a background MDP called FetchAndPlaceMDP
-which simply stores all of the necesarry information. The sub-MDPs differ by reward function, termination conditions, and sometimes 
-reduced state or action spaces. 
+To exploit the compositional feature of these types of problems, each task is defined by its own MDP. Implementationally, these subprocess MDPs contain a background MDP called =FetchAndPlaceMDP= that stores all of the structural information. The subprocess MDPs differ by reward function, termination conditions, and sometimes reduced state or action spaces. 
 
-The composite MDP, called MegaMDP, simply transitions between the 3 sub-MDPs as needed, starting with Box. 
+The composite MDP, which we term =MegaMDP=, simply transitions between the three subprocess MDPs as needed, starting with /box/. 
 
 
 
-** Rendering
-
-If you would like to see a basic rendering of the MDPs, use RenderMDPs.jl. Read the instructions at the top of the file to use it. 
-
-
-
-** State and Action Spaces
-
-*** Box
+*** State and Action Spaces
 
 Box's state space consists of the XYZ coordinates of the arm and the XYZ coordinates of the object (6 dimensions). Since
 the arm and object are within the box, none of the state dimensions can be less than 0 or greater than 10.
@@ -43,14 +32,10 @@ the arm and object are within the box, none of the state dimensions can be less 
 Box's action space consists of movement in each of the XYZ directions for both the arm and object (6 dimensions). Both
 arm and object are allowed to move between -1 and 1 units in any/all directions each timestep. 
 
-*** Fetched
-
 Fetched's state space consists of the XYZ coordinate of the arm(holding the object) and XYZ coordinate of the destination (6
 dimensions). Both of these coordinates can be outside the box but still between 0 and 30. 
 
 Fetched's action spaces consists of XYZ movement for the arm (3 dimensions)
-
-*** Placed
 
 Placed's state space consists of the XYZ coordinate of the arm(holding the object) and XYZ coordinate of the destination (6
 dimensions). Both of these coordinates can be outside the box but still between 0 and 30. 
@@ -58,38 +43,26 @@ dimensions). Both of these coordinates can be outside the box but still between 
 Placed's action space consists of movement in each of the XYZ directions for both the arm and object (6 dimensions). Both
 arm and object are allowed to move between -1 and 1 units in any/all directions each timestep.
 
-** Rewards
+*** Rewards
 
 All rewards are normalized to be between -1 and 0
-
-*** Box
 
 Reward is based on the direction of movement. If both arm and object move towards each other, than 0 reward is given. If they
 move away, -1 is given. The formula for reward is based on a dot product of their respective actions and correct directions. It 
 is always between -1 and 0 depending on how correct the action is. 
 
-*** Fetched
-
 Reward is based on the direction of movement. If the arm moves in the correct direction, 0 is given. If it moves the opposite,
 1 is given. The formula is similiar to Box, where it depends on the if the direction of movement is correct.
-
-*** Placed
 
 Reward is given based on the distance between arm and object. If they are on top of each, -1 is given. If they are 3 units away,
 0 is given. This MDP ends when they are 3 units away, so the reward scales between -1 and 0 based on distance. 
 
-** Termination conditions
+*** Termination conditions
 
-*** Box
+The /box/ MDP terminates when the arm and object are within 1 unit of each other.
 
-This MDP terminates when the arm and object are within 1 unit of each other.
-
-*** Fetched
-
-This MDP terminates when the arm is within 1 unit of the destination. Since this MDP can be hard to train on, it also has a time limit.
+The /fetch/ MDP terminates when the arm is within 1 unit of the destination. Since this MDP can be hard to train on, it also has a time limit.
 For final testing, the time limit can be deactivated by setting the starting time to -Inf (negative infinity) before
 starting the test.
 
-*** Placed
-
-This MDP terminates when the arm and object are greater than 3 units apart. 
+The /place/ MDP terminates when the arm and object are greater than 3 units apart. 
